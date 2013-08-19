@@ -1,0 +1,37 @@
+<form class="form-inline">
+    <input type="text" class="form-control" placeholder="Pesquisar Categoria" style="width: 400px">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+    </span>
+    <a href="<?php echo $this->url('livraria-admin',array('controller'=>'users','action'=>'new')) ?>" 
+       class="btn btn-primary" type="button">CADASTRAR</a>
+    
+</form>
+<div>
+    <table class="table table-bordered table-striped table-hover table-condensed" style="width: 600px;">
+        <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>E-MAIL</th>
+            <th>AÇÃO</th>
+        </tr>       
+        <?php foreach ($this->data as $entity): ?>
+            <tr>
+        <td><?php echo $entity->getId(); ?></td>
+        <td><?php echo $entity->getNome(); ?></td>
+        <td><?php echo $entity->getEmail(); ?></td>
+        <td>
+            <a href="<?php echo $this->url('livraria-admin-interna',
+                    array('controller'=>'users','action'=>'edit','id'=>$entity->getId())); ?>" 
+                    class="btn btn-primary btn-small" type="button">Editar</a>
+            <a href="<?php echo $this->url('livraria-admin-interna',
+                    array('controller'=>'users','action'=>'delete','id'=>$entity->getId())); ?>" 
+                    class="btn btn-danger btn-small" type="button">Deletar</a>            
+        </td>
+    </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+<br />
+<br />
+<?php echo $this->paginationControl($this->data, 'Sliding', 'paginator'); ?>

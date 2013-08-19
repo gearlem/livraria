@@ -1,0 +1,12 @@
+<h1>Categorias</h1>
+<br />
+<ul>
+    <?php foreach ($this->categorias as $categorias): ?>
+        <li><?php echo $categorias; ?></li>
+        <ul>
+            <?php foreach ($categorias->getLivros() as $livros): ?>
+                <li><?php echo $livros->getNome(); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endforeach; ?>
+</ul>

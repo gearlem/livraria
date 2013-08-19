@@ -1,0 +1,50 @@
+<center>
+    <form class="form-inline">
+        <input type="text" class="form-control" placeholder="Pesquisar Categoria" style="width: 400px">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+        </span>
+        <a href="#categoria_New" role="button" class="btn" data-toggle="modal">Nova Categoria</a>
+
+    </form>
+    <div>
+        <table class="table table-bordered table-striped table-hover table-condensed" style="width: 600px;">
+            <tr>            
+                <th>NOME</th>
+                <th></th>
+            </tr>       
+            <?php foreach ($this->data as $entity): ?>
+                <tr>
+
+                    <td onclick="location.href = '<?php echo $this->url('livraria-admin-interna', array('controller' => 'categorias', 'action' => 'edit', 'id' => $entity->getId()));
+                ?>';" style="cursor: pointer"><?php echo $entity->getNome(); ?></td>
+                    <td style="width: 80px">
+
+                        <a href="<?php echo $this->url('livraria-admin-interna', array('controller' => 'categorias', 'action' => 'delete', 'id' => $entity->getId()));
+                ?>" 
+                           class="btn btn-small" type="button"><i class="icon-trash"></i></a>            
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+</center>
+<?php echo $this->paginationControl($this->data, 'Sliding', 'paginator'); ?>
+<div id="categoria_New" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Nova Categoria</h3>
+    </div>
+    <div class="modal-body">
+        <?php
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('livraria-admin', array('controller' => 'categorias', 'action' => 'new')));
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->formHidden($form->get('id'));
+        echo $this->formRow($form->get('nome')) . "<br>";
+        echo $this->formSubmit($form->get('submit'));
+        echo $this->form()->closeTag();
+        ?>
+    </div>
+</div>

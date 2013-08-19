@@ -1,0 +1,39 @@
+<h1>Livros</h1>
+<br />
+<div>
+<table class="table table-bordered table-striped table-hover table-condensed">
+    <tr>
+        <th>ID</th>
+        <th>NOME</th>
+        <th>CATEGORIA</th>
+        <th>VALOR</th>
+        <th>AUTOR</th>
+        <th>AÇÃO</th>
+    </tr>
+    
+    <?php foreach ($this->data as $entity): ?>
+    <tr>
+        <td><?php echo $entity->getId(); ?></td>
+        <td><?php echo $entity->getNome(); ?> <br /> <?php echo $entity->getIsbn() ; ?></td>
+        <td><?php echo $entity->getCategoria(); ?></td>
+        <td><?php echo $entity->getValor(); ?></td>
+        <td><?php echo $entity->getAutor(); ?></td>
+        <td>
+            <a href="<?php echo $this->url('livraria-admin-interna',
+                    array('controller'=>'livros','action'=>'edit','id'=>$entity->getId())); ?>" 
+                    class="btn btn-primary btn-small" type="button">Editar</a>
+            <a href="<?php echo $this->url('livraria-admin-interna',
+                    array('controller'=>'livros','action'=>'delete','id'=>$entity->getId())); ?>" 
+                    class="btn btn-danger btn-small" type="button">Deletar</a>            
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+</div>
+<br />
+<p>
+    <a href="<?php echo $this->url('livraria-admin',array('controller'=>'livros','action'=>'new')) ?>" 
+       class="btn btn-primary" type="button">CADASTRAR</a>
+</p>
+<br />
+<?php echo $this->paginationControl($this->data,'Sliding','paginator'); ?>

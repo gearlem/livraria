@@ -1,0 +1,79 @@
+<?php
+$urlPattern = $_SERVER['REQUEST_URI'];
+$formatUrl = function ($page) use ($urlPattern) {
+            if (!preg_match('/page/', $urlPattern))
+                return $urlPattern . "/page/" . $page;
+            else
+                return preg_replace('/\d/', $page, $urlPattern);
+        };
+?>
+<center>
+    <?php if ($this->pageCount): ?>
+        <div class=" paginationControl pagination">
+            <ul>
+                <!-- Link para primeira página -->
+                <li>
+                    <?php if (isset($this->previous)): ?>
+                        <a href="<?php echo $formatUrl($this->first) ?>">
+                            <i class="icon-fast-backward"></i>
+                        </a>
+                    <?php else: ?>
+                        <span class="disabled"><i class="icon-fast-backward"></i></span>
+                    <?php endif; ?>
+                </li>
+
+                <!-- Link pagina anterior -->
+                <li>
+                    <?php if (isset($this->previous)): ?>
+                        <a href="<?php echo $formatUrl($this->previous); ?>">
+                            <i class="icon-backward"></i>
+                        </a>
+                    <?php else: ?>
+                        <span class="disabled"><i class="icon-backward"></i></span>
+                    <?php endif; ?>
+                </li>
+
+                <!-- Link com numero de paginas -->                
+                <?php foreach ($this->pagesInRange as $page): ?>   
+
+                    <?php if ($page != $this->current): ?>
+                        <li>
+                            <a href="<?php echo $formatUrl($page); ?>">                            
+                                <?php echo $page; ?>                           
+                            </a>
+                        </li>
+
+                    <?php else: ?>
+                        <li class="active"><span><?php echo $page; ?></span></li>
+                    <?php endif; ?>           
+                <?php endforeach; ?>                
+
+                <!-- Link para próxima página -->
+                <li>
+                    <?php if (isset($this->next)): ?>
+                        <a href="<?php echo $formatUrl($this->next); ?>">
+                            <i class="icon-forward"></i>
+                        </a>
+                    <?php else: ?>
+                        <span class="disabled"><i class="icon-forward"></i></span>
+                    <?php endif; ?>
+                </li>
+
+                <!-- Link para ultima página -->
+                <li>
+                    <?php if (isset($this->next)): ?>
+                        <a href="<?php echo $formatUrl($this->last); ?>">
+                            <i class="icon-fast-forward"></i>
+                        </a>
+                    <?php else: ?>
+                        <span class="disabled"><i class="icon-fast-forward"></i></span>
+                    <?php endif; ?>
+                </li>
+            </ul>
+            <br />
+            <?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?> registros
+        </div>
+    
+    <?php endif; ?>
+
+</center>
